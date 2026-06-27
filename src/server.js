@@ -25,6 +25,9 @@ app.use(
   }),
 );
 
+// Додаємо middleware для парсингу JSON у тілі запитів
+app.use(express.json());
+
 // Додаємо обробку головної сторінки (відповідь на запит типу GET)
 app.get("/notes", (req, res) => {
   console.log("get notes controller");
