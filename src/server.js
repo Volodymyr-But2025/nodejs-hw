@@ -19,7 +19,7 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 
-connectMongoDB();
+await connectMongoDB();
 
 app.listen(PORT, () => {
   console.log(`✅ Server is running on port ${PORT}`);
