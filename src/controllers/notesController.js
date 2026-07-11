@@ -3,8 +3,44 @@ import { Note } from "../models/note.js";
 
 
 export const getAllNotes = async (req, res, next) => {
-    const notes = await Note.find();
-    res.status(200).json(notes);
+
+  const { page=1, perPage=10,tag, search } = req.query;
+   const skip = (page - 1) * perPage;
+
+  const noteQuery = Note.find();
+
+  if (search) {
+    noteQuery.where({
+      $or: [
+    { title: { $regex: search, $options: 'i' } },
+    { content: { $regex: search, $options: 'i' } },
+  ],
+    });
+  }
+  if (tag) {
+    noteQuery.where("tag").equals(tag);
+  }
+
+   const [totalItems, notes] = await Promise.all([
+    // x.clone()
+    noteQuery.clone().countDocuments(),
+    // x()
+    noteQuery.skip(skip).limit(perPage),
+  ]);
+
+  const totalPages = Math.ceil(totalItems / perPage);
+
+
+
+
+
+    res.status(200).json({
+    page,
+    perPage,
+    totalItems,
+    totalPages,
+      notes}
+    );
 };
 
 

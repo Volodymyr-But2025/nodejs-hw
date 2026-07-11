@@ -1,8 +1,9 @@
 import express from "express";
 import "dotenv/config";
 import cors from "cors";
+import { errors } from "celebrate";
 import { notFoundHandler } from "./middleware/notFoundHandler.js";
-import { connectMongoDB }from "./db/connectMongoDB.js";
+import { connectMongoDB } from "./db/connectMongoDB.js";
 import { logger } from "./middleware/logger.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import notesRoutes from "./routes/notesRoutes.js";
@@ -16,6 +17,7 @@ app.use(logger);
 app.use(express.json());
 app.use(notesRoutes);
 app.use(notFoundHandler);
+app.use(errors());
 app.use(errorHandler);
 
 
