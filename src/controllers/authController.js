@@ -8,7 +8,7 @@ import path from 'node:path';
 import fs from 'node:fs/promises';
 
 import { Session } from '../models/session.js';
-import { sendEmail } from '../uyils/sendMail.js';
+import { sendEmail } from '../utils/sendMail.js';
 
 export const registerUser = async (req, res) => {
   const { email, password } = req.body;
