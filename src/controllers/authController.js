@@ -95,7 +95,9 @@ export const requestResetEmail = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
-    throw createHttpError(200, 'Password reset email sent successfully');
+    res.status(200).json({
+      message: 'Password reset email sent successfully',
+    });
   }
 
   const token = jwt.sign(
@@ -142,7 +144,7 @@ export const resetPassword = async (req, res) => {
   try {
     payload = jwt.verify(token, process.env.JWT_SECRET);
   } catch {
-    throw createHttpError(400, 'Invalid or expired token');
+    throw createHttpError(401, 'Invalid or expired token');
   }
   const user = await User.findOne({ _id: payload.sub, email: payload.email });
   if (!user) {

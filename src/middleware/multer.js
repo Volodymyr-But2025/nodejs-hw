@@ -1,7 +1,7 @@
 import multer from 'multer';
 
 // req.file
-export const uploadAvatar = multer({
+export const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
     fileSize: 2 * 1024 * 1024,
