@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 const userSchema = new Schema(
   {
@@ -17,14 +17,17 @@ const userSchema = new Schema(
       required: true,
       minlength: 8,
     },
-
+    avatar: {
+      type: String,
+      default: 'https://ac.goit.global/fullstack/react/default-avatar.jpg',
+    },
   },
   {
     timestamps: true,
   },
 );
 
-userSchema.pre("save", function () {
+userSchema.pre('save', function () {
   if (!this.username) {
     this.username = this.email;
   }
@@ -36,4 +39,4 @@ userSchema.methods.toJSON = function () {
   return obj;
 };
 
-export const User = model("User", userSchema);
+export const User = model('User', userSchema);
